@@ -1,0 +1,4 @@
+If argument b is greater than 0, a and b are combined with addition.
+If argument b is negative, a combines with b by subtracting it.
+
+This demonstrates operators can be returned by expressions and used in subsequent expressions.

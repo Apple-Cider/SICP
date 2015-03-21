@@ -1,0 +1,8 @@
+Applicative-order evaluation:
+	Upon encountering the argument (p), the interpreter will attempt to evaluate the expression.
+	Given the expression's definition, it will become caught in a loop.
+	
+Normal-order evaluation:
+	The interpreter will substitute the unevaluated arguments into the body of the test procedure.
+	It will then attempt to evaluate the if expression, and finding the condition is met, return 0.
+	The self-reference causing a loop is therefore never encountered.
