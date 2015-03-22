@@ -1,0 +1,26 @@
+Use 225 as a baseline for numbers that work reasonably with the good-enough?
+test, where dividing the argument by the square of its square root should
+approximately equal 1:
+
+> (/ 225
+     (square (sqrt 225)))
+0.9999998489604283
+
+The good-enough? test cannot be very effective for finding square roots of
+small numbers because the tolerance constant binds it to a limited precision.
+
+> (/ 0.00000012024
+     (square (sqrt 0.00000012024)))
+0.0001231156639380655
+
+The test also fails for very large numbers as the typically limited precision
+of a computer's arithmetic operations can mean too many digits are rounded off
+to detect the sought tolerance.
+
+The following causes the program to hang:
+
+> (/ 52883976031572336946607585250159745408109645824
+     (square (sqrt 52883976031572336946607585250159745408109645824)))
+
+With a test that measures the change of guess from iteration to iteration,
+the problems associated with the previous test are resolved.

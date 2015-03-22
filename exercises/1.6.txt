@@ -1,0 +1,3 @@
+The interpreter, following applicative order evaluation, will evaluate the operator and operands.
+This causes both the then-clause and else-clause to be evaluated. Given the else-clause recurses,
+new-if will never return the then-clause and the program will loop infinitely.
