@@ -1,0 +1,2 @@
+The order of growth of space is THETA(n).
+The order of growth of steps is THETA(n^2).
