@@ -1,0 +1,15 @@
+a)
+A call to p is linked to a division of the angle by 3.
+
+Let n = the number of calls of p to reduce angle r below 0.1
+r/(3^n) <= 0.1
+r <= 0.1*3^n
+r/0.1 <= 3^n
+
+Let r = 12.15
+12.15/0.1 <= 3^n
+121.5 <= 3^n
+n = 5
+
+b)
+Both space and number of steps have an order of growth of THETA(log(base=3, a)).
