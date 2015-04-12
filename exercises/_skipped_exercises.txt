@@ -1,1 +1,2 @@
 1.13 - need to brush up on proofs
+1.19 - {ip} need to struggle through using wicked math understandings

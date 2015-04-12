@@ -1,21 +1,9 @@
-(A 1 10) = 1024
-(A 2 4) = 65536
-(A 3 3) = 65536
+Summarizing prompt:
 
-(define (f n) (A 0 n))
+T: a <- a + b, b <- a
+T^n(a=1,b=0) -> (fib(n+1),fib(n))
 
-2n = 2 + 2 + 2 + ... + 2 = SIGMA(upperbound = n, term = 2)
+T = T(p=0,q=1) where T(a,b): a <- bq + aq + ap, b <- bp + aq
+... probably should use a richer file type for super/subscripts/formulas.
 
-(define (g n) (A 1 n))
-
-2^n = 2 * 2 * 2 * ... * 2 = PI(upperbound = n, term = 2)
-
-(define (h n) (A 2 n))
-
-? = 2 ^ 2 ^ 2 ^ ... ^ 2 = ?(upperbound = n, term = 2)
-
-scrap work... :
-   A(3,3)
- = A(2,4)
- = A(1,16)
- = A(0,32768)
+T(p,q)^2 = T(p',q')
