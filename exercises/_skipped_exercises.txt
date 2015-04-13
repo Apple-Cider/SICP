@@ -1,2 +1,4 @@
 1.13 - need to brush up on proofs
 1.19 - {ip} need to struggle through using wicked math understandings
+1.23 - {ip} root through all those given procedures to find aspects that 
+            don't depend on the rate test-divisor is increased

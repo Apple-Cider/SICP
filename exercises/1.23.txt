@@ -1,0 +1,25 @@
+pE = previous exercise computation times (ms)
+cE = odds-only optimized computation times (ms)
+factor = pE/cE
+
+pE  cE  factor
+27	13	2.076923077
+26	21	1.238095238
+25	18	1.388888889
+89	49	1.816326531
+85	58	1.465517241
+83	50	1.66
+266	172	1.546511628
+263	183	1.43715847
+251	169	1.485207101
+840	550	1.527272727
+853	569	1.499121265
+891	560	1.591071429
+
+avg factor: 1.5610078
+
+The average factor of 1.56 is less than the expected factor of 2.
+This is because the steps removed from the computation did not account
+for half of the runtime. ***** I will need to pick apart all those
+procedures to figure out where the components lie that aren't reduced
+by a doubly fast iteration over test-divider *****
