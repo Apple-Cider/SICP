@@ -1,0 +1,30 @@
+Much larger n values were used in order to register differences in timing values.
+The first output for (do-exercise):
+100000000003 ms: 27
+100000000019 ms: 26
+100000000057 ms: 25
+
+1000000000039 ms: 89
+1000000000061 ms: 85
+1000000000063 ms: 83
+
+10000000000037 ms: 266
+10000000000051 ms: 263
+10000000000099 ms: 251
+
+100000000000031 ms: 840
+100000000000067 ms: 853
+100000000000097 ms: 891
+
+Summarizing the data,
+where "p" = predicted time (ms) based on THETA(n^.5) order of growth:
+
+  n      ms          p
+10^10  26.00         -
+10^11  86.33       82.22
+10^12  260.00      272.90
+10^13  861.33      822.19
+ 
+ The predicted values are startlingly close, and I'm really geeking out right now.
+ The results are compatible with the notion that programs on my machine run in
+ time proportional to the number of steps required for the computation.
