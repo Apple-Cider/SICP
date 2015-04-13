@@ -1,0 +1,55 @@
+With each found prime tested 1000 times, the time results are:
+100000000003 ms: 23
+100000000019 ms: 82
+100000000057 ms: 31
+100000000063 ms: 34
+100000000069 ms: 34
+
+1000000000039 ms: 27
+1000000000061 ms: 28
+1000000000063 ms: 32
+1000000000091 ms: 30
+1000000000121 ms: 31
+
+10000000000037 ms: 61
+10000000000051 ms: 34
+10000000000099 ms: 47
+10000000000129 ms: 33
+10000000000183 ms: 31
+
+100000000000031 ms: 53
+100000000000067 ms: 31
+100000000000097 ms: 39
+100000000000099 ms: 36
+100000000000133 ms: 31
+
+1000000000000037 ms: 41
+1000000000000091 ms: 42
+1000000000000159 ms: 37
+1000000000000187 ms: 43
+1000000000000223 ms: 44
+
+Summarizing the data,
+where "p" = predicted time (ms) based on THETA(log(n)) order of growth:
+
+  n      ms          p
+10^11  40.80         -
+10^12  29.60       44.51
+10^13  41.20       32.07
+10^14  38.00       44.37
+10^15  41.40       40.71
+
+The predicted times are in the neighborhood of the recorded values,
+but variance perhaps caused by the large values and ranges of tested
+numbers jostles them off a bit.
+
+Reducing the maximum tested value from 4294967087 to 10000 resulted in:
+
+  n      ms          p
+10^11  28.80         -
+10^12  31.96       31.42
+10^13  24.20       34.62
+10^14  30.60       26.06
+10^15  35.80       32.79
+
+where predictions are more accurate.

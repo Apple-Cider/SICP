@@ -14,7 +14,9 @@
 (define (fermat-test n)
   (define (try-it a)
     (= (expmod a n n) a))
-  (try-it (+ 1 (random (- n 1)))))
+  (if (> n 4294967087)
+      (try-it (+ 1 (random (- 10000 1))))
+      (try-it (+ 1 (random (- n 1))))))
 
 (define (fast-prime? n times)
   (cond ((= times 0) #t)
@@ -26,7 +28,7 @@
 (define (timed-prime-test n)
   (start-prime-test n (current-milliseconds)))
 (define (start-prime-test n start-time)
-  (cond ((fast-prime? n)
+  (cond ((fast-prime? n 1000)
       (report-prime n (- (current-milliseconds) start-time))
       #t)
         (else #f)))
@@ -48,12 +50,16 @@
       (prime-iter k (+ min 2))))
 
 
-(define (do-exercise)
+(define (do-exercise k)
   (begin
-    (search-for-primes 3 100000000000)
+    (search-for-primes k 100000000000)
     (newline)
-    (search-for-primes 3 1000000000000)
+    (search-for-primes k 1000000000000)
     (newline)
-    (search-for-primes 3 10000000000000)
+    (search-for-primes k 10000000000000)
     (newline)
-    (search-for-primes 3 100000000000000)))
+    (search-for-primes k 100000000000000)
+    (newline)
+    (search-for-primes k 1000000000000000)))
+
+(do-exercise 5)
