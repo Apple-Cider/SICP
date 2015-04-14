@@ -1,0 +1,7 @@
+Alyssa is correct. Her rewritten procedure would work.
+But its process operates on numbers that grow to a^n,
+which can be as large as (n-1)^n. For large n values this is highly impractical.
+
+The fast prime tester ought to use the original expmod.
+The original restricts factors by chaining remainder operations,
+effectively limiting operands to (n-1)^2.
