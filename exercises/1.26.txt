@@ -1,0 +1,8 @@
+Lou forwent using square in his procedure, which was necessary to
+optimize expmod. Any time expmod executes and its exponent argument
+is even, it can cut the exponent in half to effect a logarithmic
+growth of the number of steps. His method of explicitly multiplying
+recursive calls to expmod means that while their "n" is halved,
+they are called twice as often, nullifying the efficiency.
+square requires only one argument, so expmod is only called once and
+the results are sent to square.
