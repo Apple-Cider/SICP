@@ -2,3 +2,5 @@
 1.19 - {ip} need to struggle through using wicked math understandings
 1.23 - {ip} root through all those given procedures to find aspects that 
             don't depend on the rate test-divisor is increased
+1.28 - {ip} structure the expmod procedure to rely on identifying nontrivial
+						square roots
