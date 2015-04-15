@@ -1,0 +1,5 @@
+(f f) supplies f's body with the g parameter (in this case, the argument is f):
+(f 2)
+This causes another evaluation of f, with the g parameter = 2:
+(2 2)
+2 isn't trained in surgery, so the compiler stops it from operating on itself.
