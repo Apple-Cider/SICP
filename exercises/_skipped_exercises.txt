@@ -4,3 +4,5 @@
             don't depend on the rate test-divisor is increased
 1.28 - {ip} structure the expmod procedure to rely on identifying nontrivial
 						square roots
+1.38 - {ip} some bug; e given as 2.59817174187
+														 not 2.71828182846
