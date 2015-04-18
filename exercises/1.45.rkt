@@ -1,6 +1,5 @@
 #lang racket
 
-
 (define (compose f g)
   (lambda (x) (f (g x))))
 
@@ -9,9 +8,6 @@
     (if (= n 1)
         (f x)
         ((compose f (repeated f (- n 1))) x))))
-
-(define (square x) (* x x))
-;((repeated square 2) 5)
 
 (define tolerance 0.00001)
 (define dx 0.00001)
@@ -35,7 +31,6 @@
   (fixed-point (avg-dmp (lambda (y) (/ x y)))
                1.0))
 
-(define (cube x) (* x x x))
 
 (define (fourth-rt x)
   (define (g y) (/ x (cube y)))
@@ -44,17 +39,27 @@
 
 
 (define (fourth-rt-repeat x)
-  (define (g y) (/ x (cube y))))
+  (define (g y) (/ x (cube y)))
   (fixed-point ((repeated avg-dmp 2) g)
                1.0))
 
 
 ;(fourth-rt (* 5 5 5 5))
-(fourth-rt-repeat (* 5 5 5 5))
+;(fourth-rt-repeat (* 5 5 5 5))
 
 (define (even? x) (= (remainder x 2) 0))
 (define (pow-k k)
   (lambda (base)
-    ((repeated (lambda (x) (* x x)) k) base)))
+    ((repeated (lambda (x) (* x base))
+               (- k 1)) 
+     base)))
 
-;((pow-k 2) 3)
+(define (square x) ((pow-k 2) x))
+(define (cube x) ((pow-k 3) x))
+
+(* 12 12)
+(square 12)
+(* 7 7 7)
+(cube 7)
+(* 3 3 3 3)
+((pow-k 4) 3)
