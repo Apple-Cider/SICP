@@ -6,3 +6,7 @@
 						square roots
 1.38 - {ip} some bug; e given as 2.59817174187
 														 not 2.71828182846
+1.44 - {ip} figure out exactly what behavior is expected of a repetition of
+						smoothing a function; do the values used to smooth an input's output
+						themselves get smoothed? (that's the guess so far, but the impl does
+						not perform that way yet)
