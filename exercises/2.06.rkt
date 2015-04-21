@@ -10,14 +10,6 @@
     (lambda (x)
       (f ((n f) x)))))
 
-;(define (inc x) (+ x 1))
-
-;(((add-1 zero) inc) 2)
-;(((add-1 (add-1 zero)) inc) 2)
-
-;zero: f doesn't get applied to x
-;add-1(zero): f gets applied to x
-
 (define one
   (lambda (f)
     (lambda (x)
@@ -32,12 +24,6 @@
   (lambda (f)
     (lambda (x)
       (f (f (f x))))))
-
-;((two inc) 31)
-
-; (+ zero one) -> one
-; (+ one one)  -> two
-; (((+ one two) inc)) 4) -> 7
 
 (define (+ a b)
   (lambda (f)
