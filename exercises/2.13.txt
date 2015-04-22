@@ -1,0 +1,15 @@
+For a given interval,
+min = c-(c*t)/100 = (100c - t*c)/100 = c(100-t)/100
+max = c+(c*t)/100 = (100c + t*c)/100 = c(100+t)/100
+
+For a given product of two positive intervals a, b,
+min = a.min * b.min
+max = a.max * b.max
+
+
+* scan or type up the algebra
+100*((100+x)*(100+y)-(100-x)*(100-y))/((100+x)*(100+y)+(100-x)*(100-y))
+...
+10000(x+y)/(xy+10000)
+
+10000 * (a.tolerance + b.tolerance) / (a.tolerance * b.tolerance + 10000)
