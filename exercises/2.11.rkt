@@ -26,13 +26,13 @@
   (and (= (lower-bound x) (lower-bound y))
        (= (upper-bound x) (upper-bound y))))
 
-;interval does not span to 0 or lower
+;interval does not span below 0
 (define (positive? interval)
-  (> (lower-bound interval) 0))
+  (not (< (lower-bound interval) 0)))
 
-;interval does not span above 0
+;interval does not span to 0 or above
 (define (negative? interval)
-  (not (> (upper-bound interval) 0)))
+  (< (upper-bound interval) 0))
 
 (define (mul-interval x y)
   (define case
@@ -46,7 +46,7 @@
             (if (negative? y)
                 3
                 (if (positive? y)
-                    4
+                    0;4 <- redundant case
                     5))
             (if (negative? y)
                 6
@@ -54,12 +54,12 @@
                     7
                     8)))))
   (cond ((= case 0) (make-interval (* (lower-bound x) (lower-bound y)) (* (upper-bound x) (upper-bound y))))
-        ((= case 1) (make-interval (* (upper-bound x) (upper-bound y)) (* (lower-bound x) (lower-bound y))))
-        ((= case 2) (make-interval (* (upper-bound x) (upper-bound y)) (* (upper-bound x) (lower-bound y))))
-        ((= case 3) (make-interval (* (upper-bound x) (upper-bound y)) (* (lower-bound x) (lower-bound y))))
-        ((= case 4) (make-interval (* (lower-bound x) (lower-bound y)) (* (upper-bound x) (upper-bound y))))
+        ((= case 1) (make-interval (* (lower-bound x) (upper-bound y)) (* (upper-bound x) (lower-bound y))))
+        ((= case 2) (make-interval (* (lower-bound x) (upper-bound y)) (* (lower-bound x) (lower-bound y))))
+        ((= case 3) (make-interval (* (upper-bound x) (lower-bound y)) (* (lower-bound x) (upper-bound y))))
+        ;((= case 4) (make-interval (* (lower-bound x) (lower-bound y)) (* (upper-bound x) (upper-bound y))))
         ((= case 5) (make-interval (* (upper-bound x) (lower-bound y)) (* (upper-bound x) (upper-bound y))))
-        ((= case 6) (make-interval (* (upper-bound x) (upper-bound y)) (* (lower-bound x) (upper-bound y))))
+        ((= case 6) (make-interval (* (upper-bound x) (lower-bound y)) (* (lower-bound x) (lower-bound y))))
         ((= case 7) (make-interval (* (lower-bound x) (upper-bound y)) (* (upper-bound x) (upper-bound y))))
         ((= case 8) (make-interval (min (* (lower-bound x) (upper-bound y)) (* (upper-bound x) (lower-bound y)))
                                    (max (* (lower-bound x) (lower-bound y)) (* (upper-bound x) (upper-bound y)))))))
@@ -93,9 +93,6 @@
 
 
 (define (test-mul n)
-  (define (print-matched)
-    (newline)
-    (display "passed..."))
   (define (print-mismatch x y expected computed)
     (newline)
     (display "x: ")
@@ -111,7 +108,7 @@
     (print computed))
   (define (check f0 f1 expected computed)
     (if (equals? expected computed)
-        (print-matched)
+        (void)
         (print-mismatch f0 f1 expected computed))
     (test-mul (- n 1)))
   (let ((a (random-interval 10))
@@ -122,16 +119,24 @@
           (check a b c d)
           (newline)))))
 
-(test-mul 10)
+(test-mul 1000)
 
-(define i0 (make-interval -2 -1))
-(define i1 (make-interval -1 0))
-(define i2 (make-interval -1 1))
-(define i3 (make-interval 0 0))
-(define i4 (make-interval 0 1))
-(define i5 (make-interval 1 2))
+;(define i0 (make-interval -2 -1))
+;(define i1 (make-interval -1 0))
+;(define i2 (make-interval -1 1))
+;(define i3 (make-interval 0 0))
+;(define i4 (make-interval 0 1))
+;(define i5 (make-interval 1 2))
 
-(define (test-conditionals interval)
-  (cond ((positive? interval) (display "positive"))
-        ((negative? interval) (display "negative"))
-        (else (display "mixed"))))
+;(define (test-conditionals interval)
+;  (newline)
+;  (cond ((positive? interval) (display "positive"))
+;        ((negative? interval) (display "negative"))
+;        (else (display "mixed"))))
+
+;(test-conditionals i0)
+;(test-conditionals i1)
+;(test-conditionals i2)
+;(test-conditionals i3)
+;(test-conditionals i4)
+;(test-conditionals i5)
