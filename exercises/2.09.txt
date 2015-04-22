@@ -1,0 +1,24 @@
+Given an interval i, i.width = (i.max - i.min)/2
+Given intervals a, b, c, d where c = a + b, d = a - b
+
+c.min = a.min + b.min
+c.max = a.max + b.max
+c.width = ((a.max + b.max) - (a.min + b.min))/2
+			  = ((a.max - a.min) + (b.max - b.min))/2
+			  = (a.max - a.min)/2 + (b.max - b.min)/2
+				= a.width + b.width
+
+d.min = a.min - b.max
+d.max = a.max - b.min
+d.width = ((a.max - b.min) - (a.min - b.max))/2
+        = ((a.max - a.min) + (b.max - b.min))/2
+        = (a.max - a.min)/2 + (b.max - b.min)/2
+				= a.width + b.width
+				
+Let intervals e = [4,8], f = [5,7], g = e * f, h = e / f
+e.width =  2, f.width = 1
+g.width = 18, h.width = 18/35
+There is no clear function applicable to 2,1 to yield either 18 or 18/35.
+This is hardly a substantial proof, but the problem doesn't seem to ask for one.
+Anyhow, it seems difficult to suggest that no function could exist that maps
+the inputs' widths to the width of either the product or quotient.
