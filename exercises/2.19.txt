@@ -2,3 +2,7 @@ The order of the coin-values list does not affect the answer produced by cc.
 It does affect the efficiency, howerver. If lower values are tested against
 the remaining amount first, several needless checks against higher values will
 occur later in the tree, resulting in additional cases where amount < 0.
+
+The efficiency behind the sorted list approach can be summed up: reducing
+the problem size by the largest amounts as soon as possible stunts the
+growth of the process's tree recursion.
