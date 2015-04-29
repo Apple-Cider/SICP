@@ -1,0 +1,5 @@
+Eva is correct. Repeated computations against an uncertain number
+compound the blurring effect the uncertainty has on the result. Reducing
+the occurances of an uncertain number in an equation reduces its width's
+modulation of the result. par2 has half the intervals in its computation
+that par1 has, so it is more accurate.

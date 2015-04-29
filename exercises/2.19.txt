@@ -1,0 +1,4 @@
+The order of the coin-values list does not affect the answer produced by cc.
+It does affect the efficiency, howerver. If lower values are tested against
+the remaining amount first, several needless checks against higher values will
+occur later in the tree, resulting in additional cases where amount < 0.
