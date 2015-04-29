@@ -6,3 +6,6 @@ recursive calls to expmod means that while their "n" is halved,
 they are called twice as often, nullifying the efficiency.
 square requires only one argument, so expmod is only called once and
 the results are sent to square.
+
+In effect, he enforced the interpreter to use normal order evaluation
+rules for expmod rather than applicative order evaluation rules.
