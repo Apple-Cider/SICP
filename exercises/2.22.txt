@@ -1,0 +1,7 @@
+Lou's got iter developing answer by pairing two elements with cons:
+the square of the first "thing" and the previous answer. While he
+cdrs through things, each thing is slapped onto the start of answer,
+thus the list is reversed.
+
+His second attempt starts (rather than ends) the answer list with nil,
+annihilating the essence of lists everywhere.
