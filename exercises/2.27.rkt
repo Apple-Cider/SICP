@@ -14,6 +14,6 @@
           
   (reverse-iter items '()))
 
-(define x (list (list 1 2) (list 3 4)))
+(define x (list (list 1 (list 2 3 4) (list 5 6)) (list 7 8)))
 x
 (deep-reverse x)
