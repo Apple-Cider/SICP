@@ -1,0 +1,12 @@
+With a pair-based representation of mobiles vs. the list approach,
+only the selectors right-branch and branch-structure must be changed.
+
+The list approach necessitates applying car to the cdr of the mobile
+and branch because the cdr of those objcects is a 1-element list.
+
+A pair approach would mean cdr extracts the elements directly, requiring
+no car to access the data.
+
+The list approach is more extensible, as additional attributes of branches
+and mobiles may be added to their lists without disturbing the behavior of
+the functions which use their current attributes.
