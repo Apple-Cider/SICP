@@ -24,7 +24,7 @@
 
 
 (define (length-a sequence)
-  (accumulate (lambda (x y) (+ 1 (length-a (cdr sequence)))) 0 sequence))
+  (accumulate (lambda (x y) (+ 1 y)) 0 sequence))
 
 (length list-0)
 (length-a list-0)
