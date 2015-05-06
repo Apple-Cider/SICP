@@ -1,0 +1,7 @@
+If defining the subsets of the empty set, the set only contains the empty set.
+This is the base case.
+
+All other cases can be defined inductively. If there is a set with n elements,
+let the power set formed from all elements but the nth be called p-1. The power
+set of the n elements can be formed by inserting the nth element into each set
+of p-1, then appending p-1 to those sets.
