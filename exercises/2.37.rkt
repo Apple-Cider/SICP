@@ -26,12 +26,10 @@
 
 (define (matrix-*-matrix m n)
   (let ((cols (transpose n)))
-    ;(map (lambda (x) (accumulate
-    ;                  (lambda (y z) (+ (dot-product x y) z))
-    ;                  0
-    ;                  cols))
-    ;     m)))
-    (map (lambda (x) (map (lambda (y) (dot-product x y)) cols)) m)))
+    (map (lambda (x)
+           (map (lambda (y)
+                  (dot-product x y)) cols))
+         m)))
 
 (define m-0 (list (list 1 -1 2) (list 0 -3 1)))
 (define v-0 (list 2 1 0))
