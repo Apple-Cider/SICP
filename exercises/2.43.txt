@@ -1,0 +1,39 @@
+By calling queen-cols with k-1 for each of the 8 new-rows, he recursively
+multiplies by 8 the steps needed to generate the possible solutions of
+column k. Filtering down, this means he calls (queen-cols 7) 8 times
+and (queen-cols 1) 8^7 times.
+
+Examining the number of possible solutions at each step of the original
+function reveals the following:
+
+   tested    valid      the "lou"
+k  solutions solutions  factor
+1  8         8          8^7
+2  64        42         8^6
+3  336       140        8^5
+4  1120      344        8^4
+5  2752      568        8^3
+6  4544      550        8^2
+7  4400      312        8
+8  2496      92         1
+
+
+The sum of tested solutions approximates the size of the program's
+computation, totalling 15720 positions generated and tested.
+
+Lou's factors against these steps would total 36209472 position
+tests. Time trial data supports this:
+
+Test  T.original T.Lou
+      (ms)       (ms)
+1     10         25957      
+2     15         25652
+3     10         25963
+
+avg   11.67      25857
+
+Let x be the rate at which this machine computes a step.
+T.original = 11.67 = 15720x
+x = 0.000742366412
+T.LouComputed = 36209472x = 26881
+T.LouComputed/T.Lou = 26881/25857 = 1.0396
