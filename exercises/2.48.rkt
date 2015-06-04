@@ -16,6 +16,10 @@
   (add-vect v1 (scale-vect v2 -1)))
 
 
+(define (make-segment v1 v2) (list v1 v2))
+(define (start-segment s) (car s))
+(define (end-segment s) (cadr s))
+
 
 (define (print-vect v)
   (display "(")
@@ -25,26 +29,16 @@
   (display ")")
   (newline))
 
+(define (print-seg s)
+  (display "start: ")
+  (print-vect (start-segment s))
+  (display "end:   ")
+  (print-vect (end-segment s)))
+
 (define vect-a (make-vect 2 5))
 (define vect-b (make-vect -3 12))
+(define segment (make-segment vect-a vect-b))
 
-(display "adding vect-a and vect-b...")
+(display "segment with start at (2,5), end at (-3,12):")
 (newline)
-(display "expected: (-1,17)")
-(newline)
-(display "computed: ")
-(print-vect (add-vect vect-a vect-b))
-
-(display "subtracting vect-a from vect-b...")
-(newline)
-(display "expected: (-5,7)")
-(newline)
-(display "computed: ")
-(print-vect (sub-vect vect-b vect-a))
-
-(display "multiplying vect-a by -2...")
-(newline)
-(display "expected: (-4,-10)")
-(newline)
-(display "computed: ")
-(print-vect (scale-vect vect-a -2))
+(print-seg segment)
