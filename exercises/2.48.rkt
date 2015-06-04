@@ -16,7 +16,7 @@
   (add-vect v1 (scale-vect v2 -1)))
 
 
-(define (make-segment v1 v2) (list v1 v2))
+(define (make-segment vect1 vect2) (list vect1 vect2))
 (define (start-segment s) (car s))
 (define (end-segment s) (cadr s))
 
