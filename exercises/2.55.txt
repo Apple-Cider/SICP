@@ -1,0 +1,4 @@
+(car (quote (quote abcde)))
+......
+
+footnote: https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-16.html#call_footnote_Temp_229
