@@ -1,0 +1,54 @@
+Exercise 2.16:
+Explain, in general, why equivalent algebraic expressions may lead to different answers.
+Can you devise an interval-arithmetic package that does not have this shortcoming, or is
+this task impossible? (Warning: This problem is very difficult.)
+
+2.16 (working) answer:
+Equivalent algebraic expressions may lead to different answers because of differences
+between the numbers of times terms appear in the expressions.
+	(brainstorm)
+		input: algebraic expression containing intervals
+		tools: many kinds of functions (even beyond algebraic functions)
+		application: each term of input combined with each other term using every tool
+		concept: simplify expression into a form resulting in the least wide interval result
+		difficulty: if certain forms switch the order of popularity of interval terms'
+			          appearances (e.g. in 1 form, interval-a occurs twice and interval-b once,
+														 but in another, interval-b occurs twice and interval-a once),
+								then the width of the resulting equation is dependent on the width of the
+								arguments; no globally deterministic simplification can be achieved.
+
+(references)
+
+2.15 answer:
+Eva is correct. Repeated computations against an uncertain number
+compound the blurring effect the uncertainty has on the result. Reducing
+the occurances of an uncertain number in an equation reduces its width's
+modulation of the result. par2 has half the intervals in its computation
+that par1 has, so it is more accurate.
+
+https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-16.html
+(above Exercise 2.56)
+Although this is quite an improvement, the third example shows that there
+is still a long way to go before we get a program that puts expressions
+into a form that we might agree is "simplest." The problem of algebraic
+simplification is complex because, among other reasons, a form that may be
+simplest for one purpose may not be for another.
+
+
+https://reference.wolfram.com/language/tutorial/SimplifyingAlgebraicExpressions.html
+
+Simplify is set up to try various standard algebraic transformations on the
+expressions you give. Sometimes, however, it can take more sophisticated
+transformations to make progress in finding the simplest form of an expression.
+
+FullSimplify tries a much wider range of transformations, involving not only
+algebraic functions, but also many other kinds of functions.
+
+For fairly small expressions, FullSimplify will often succeed in making some
+remarkable simplifications. But for larger expressions, it can become
+unmanageably slow.
+
+The reason for this is that to do its job, FullSimplify effectively has to try
+combining every part of an expression with every other, and for large
+expressions the number of cases that it has to consider can be astronomically
+large.

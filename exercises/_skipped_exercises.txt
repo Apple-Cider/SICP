@@ -10,6 +10,5 @@
 						smoothing a function; do the values used to smooth an input's output
 						themselves get smoothed? (that's the guess so far, but the impl does
 						not perform that way yet)
-2.16 - {  } need to take a couple of algebra theory courses maybe? The authors
-            did give a warning that it's very hard.
+2.16 - {ip} study up on algebraic expression simplification
 2.55 - {ip} should be figuring out soon.
