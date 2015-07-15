@@ -1,0 +1,27 @@
+To compute the efficiency of each set procedure,
+the "duplicancy" of a set's representation must be assessed.
+Let d = the average of the number of times each element of the set
+        occurs in that set's representation
+
+e.g. {1,2,3} represented by (1 2 2 3 3 3) has d = 2
+	element occurrences
+	1       1
+	2       2
+	3       3
+	avg.    (1+2+3)/3
+	
+For a given set s, (length s) = n*p
+
+function             growth-rate
+element-of-set       THETA(n*d)
+adjoin-set           THETA(1)
+intersection-set     THETA((n*d)^2)
+union-set            THETA(n*d)
+
+There are a few attributes an application may have which incline it
+to use such a representation.
+	- low duplicancy is expected
+	- adding elements to sets is frequent
+	- unioning sets is frequent
+	- space is not a limiting factor
+	- there are periods of down-time where deduplication can occur
