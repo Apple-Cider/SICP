@@ -1,0 +1,18 @@
+a)
+partial-tree divides a list's elements such that the median
+(or element earlier for odd-numbered lists) becomes a tree
+root, all elements less than that root form a tree as the root's
+left branch, and all elements greater than the root become a
+tree serving as the root's right branch. Its recursive tree
+construction terminates when no elements are passed to it,
+and it provides an empty list for the tree.
+
+      5
+    /   \
+   1     9
+    \   / \
+     3 7   11
+
+b)
+The order of growth to convert an ordered list to a balanced
+binary tree using partial-tree is THETA(n)
