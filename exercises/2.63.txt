@@ -13,7 +13,7 @@ cl  = copy-to-list
 t#  = tree whose entry is #
 
 The number above the expansion represents the steps taken to arrive
-at that expansion.
+at that stage of the expansion.
 
 e.g. :
 0
@@ -151,4 +151,4 @@ Expansion 2:
 
 total steps = 20
 
-tree->list2 has a slower growth (i.e. is more efficient) than tree->list1
+tree->list2 has a slower growth (is more efficient) than tree->list1
