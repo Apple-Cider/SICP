@@ -100,8 +100,6 @@
       set1
       (balance-tree (elts-adjoin-set (tree->list-2 set1) set2))))
 
-(define (
-
 (define tree-a (make-tree 1 '()
                           (make-tree 2 '()
                                      (make-tree 3 '()
