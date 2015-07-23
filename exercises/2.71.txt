@@ -1,0 +1,41 @@
+For n = 5,
+let {A B C D E} be the set of symbols with frequencies 1, 2, 4, 8, 16.
+then the Huffman tree is:
+
+{A B C D E} 31
+     / \
+ E 16  {A B C D} 15
+       / \
+		D 8  {A B C} 7
+		     / \
+			C 4  {A B} 3
+			     / \
+				B 2   A 1
+
+For n = 10,
+let {A B C D E F G H I J} be the set of symbols with frequences
+1, 2, 4, 8, 16, 32, 64, 128, 256, 512.
+then the Huffman tree is:
+{A B C D E F G H I J} 1023
+     / \
+J 512  {A B C D E F G H I} 511
+        / \
+	 I 256  {A B C D E F G H} 255
+	         / \
+		  H 128  {A B C D E F G} 127
+		         / \
+				 G 64  {A B C D E F} 63
+				       / \
+					 F 32  {A B C D E} 31
+					       / \
+						 E 16  {A B C D} 15
+						       / \
+								D 8  {A B C} 7
+								     / \
+									C 4  {A B}
+									     / \
+										B 2   A 1
+
+For such a tree with n symbols,
+1 bit is required to encode the most frequent symbol and
+n-1 bits are required to encode the least frequent symbol.
