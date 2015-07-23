@@ -1,0 +1,11 @@
+The most frequent symbol can be encoded in n+1 steps (worst case scenario).
+Checking that the tree contains the symbol may require n checks,
+and checking the left branch (this assumes the tree is built such that
+leaves stem leftwardly) would reveal the symbol in the left branch with 1 step.
+Therefore, the growth rate for encoding the most frequent symbol of a set
+is THETA(n).
+
+The least frequent symbol would be encoded in n*(n-1)/2 steps,
+for a growth rate of THETA(n^2).
+This is due to each step only siphoning off 1 element from n, for an ugly
+summation of n + n-1 + n-2 + ... + n-(n-1).
