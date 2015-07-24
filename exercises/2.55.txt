@@ -1,4 +1,7 @@
-(car (quote (quote abcde)))
-......
-
-footnote: https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-16.html#call_footnote_Temp_229
+As stated, quotation allows typing in compound objects using the conventional
+printed representation for lists. Thus (car (quote (a b c))) returns (without
+evaulation) "a".
+Written out, (car ''abracadabra) expands to (car (quote (quote abracadabra)))
+The outer quote renders the inner quote and argument as a list, which car
+procedes to pluck apart to retrieve that first list item, the special form
+procedure quote.
