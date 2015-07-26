@@ -12,6 +12,6 @@
 						not perform that way yet)
 2.16 - {ip} study up on algebraic expression simplification
 2.57 - {ip} grappling with syntactic oddities concerning arbitrary argument passing
-						and other issues
+						and other issues *look into the apply procedure & make-product's logic
 2.58 - {  } finish 2.57 first
 2.65 - {ip} needs more hard thinking about lists and traversals and tree construction

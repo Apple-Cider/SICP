@@ -1,0 +1,107 @@
+a)
+The functions which executed deriv's arithmetic differentiation rules on a
+given expression were consolidated in a dispatch table. This table is indexed
+by exp's operator. Therefore the operator is used to fetch from the table the
+appropriate deriv implemenation.
+
+The predicates number? and same-variable? are used to identify expressions not
+typified by an arithmetic operator. Expressions which are typified by an
+operator such as '* can be fed to the get procedure to find and use the
+procedure which is appropriate for them. But expressions without such operators,
+such as 'y or 5 (candidates which work with number?, variable?, and
+same-variable?) cannot be used to fetch and use an indexed procedure because
+their values range wildly and the get procedure has no capacity to abstractly
+interpret its arguments before searching for them in the operations table.
+
+b)
+(define (install-deriv-package)
+	;; internal procedures
+	(define (addend s) (car s))
+	(define (augend s) (cadr s))
+	(define (make-sum a1 a2)
+		(cond ((=number? a1 0) a2)
+					((=number? a2 0) a1)
+					((and (number? a1) (number? a2)) (+ a1 a2))
+					(else (list '+ a1 a2))))
+	(define (multiplyer p) (car p))
+	(define (multiplicand p) (cadr p))
+	(define (make-product m1 m2)
+		(cond ((or (=number? m1 0) (=number? m2 0)) 0)
+					((=number? m1 1) m2)
+					((=number? m2 1) m1)
+					((and (number? m1) (number? m2)) (* m1 m2))
+					(else (list '* m1 m2))))
+	(define (deriv-sum operands var)
+		(make-sum (deriv (addend operands) var)
+							(deriv (augend operands) var)))
+	(define (deriv-product operands var)
+		(make-sum
+			(make-product (multiplier operands)
+										(deriv (multiplicand operands) var))
+			(make-product (deriv (multiplier operands) var)
+										(multiplicand operands))))
+	(put 'deriv '(+) deriv-sum)
+	(put 'deriv '(*) deriv-product)
+	'done)
+
+c)
+(define (install-deriv-package)
+	;; internal procedures
+	(define (base x) (car x))
+	(define (exponent x) (cadr x))
+	(define (make-exponentiation base exponent)
+		(cond ((=number? exponent 0) 1)
+					((=number? exponent 1) base)
+					((and (number? base) (number? exponent)) (expt base exponent))
+					(else (list '** base exponent))))
+	(define (deriv-exponentiation operands var)
+		(make-product
+			(make-product (exponent operands)
+										(make-exponentiation (base operands)
+																				 (make-sum -1 (exponent operands))))
+			(deriv (base operands) var)))
+	(put 'deriv '(**) deriv-exponentiation)
+	'done)
+
+d)
+
+The op and type arguments for get are used to look up the item put into the
+table of procedures. Swapping their positions would require their positions be
+swapped in the put operation, but the procedures fetched would be used  in the
+same way as before.
+
+(define (deriv exp var)
+   (cond ((number? exp) 0)
+         ((variable? exp) (if (same-variable? exp var) 1 0))
+         (else ((get (operator exp) 'deriv) (operands exp) ; <-CHANGED
+                                            var))))
+
+(define (install-deriv-package)
+	;; internal procedures
+	(define (addend s) (car s))
+	(define (augend s) (cadr s))
+	(define (make-sum a1 a2)
+		(cond ((=number? a1 0) a2)
+					((=number? a2 0) a1)
+					((and (number? a1) (number? a2)) (+ a1 a2))
+					(else (list '+ a1 a2))))
+	(define (multiplyer p) (car p))
+	(define (multiplicand p) (cadr p))
+	(define (make-product m1 m2)
+		(cond ((or (=number? m1 0) (=number? m2 0)) 0)
+					((=number? m1 1) m2)
+					((=number? m2 1) m1)
+					((and (number? m1) (number? m2)) (* m1 m2))
+					(else (list '* m1 m2))))
+	(define (deriv-sum operands var)
+		(make-sum (deriv (addend operands) var)
+							(deriv (augend operands) var)))
+	(define (deriv-product operands var)
+		(make-sum
+			(make-product (multiplier operands)
+										(deriv (multiplicand operands) var))
+			(make-product (deriv (multiplier operands) var)
+										(multiplicand operands))))
+	(put '+ '(deriv) deriv-sum) ; <-RESULTANT CHANGE
+	(put '* '(deriv) deriv-product) ; <-RESULTANT CHANGE
+	'done)
