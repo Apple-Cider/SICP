@@ -1,0 +1,65 @@
+3 systems.
+Describe changes needed to a system to add new types and ops.
+What's best system when new types = many? when new ops = many?
+
+Generic Operations with Explicit Dispatch
+	You've left your toys out of the box.
+	+ new type T
+		Any instance a value with type T occurs, it should be tagged with T.
+		Therefore the type can be retrieved separately from the contents.
+		For each generic op that applys to T, a uniquely-named op (ideally
+		incorporating T in the name) must be defined. Then each op's definition
+		must include a new clause in the dispatching conditional, containing a
+		predicate to test if the type of data is T, and a consequent expression
+		where the uniquely-named op specific to T is then passed the data pulled
+		off the tagged argument.
+	+ new operation Op
+		Each type of data the generic Op should apply to necessitates defining
+		uniquely-named functions (incorporating Op in the name) that execute the
+		generic operation on the specific data type they are designed to handle.
+		Then the generic can be defined to dispatch on the types of data it can
+		expect its arguments to have, seeking the appropriate specific function
+		to execute on the content retrieved from the argument.
+
+Data-directed Style
+	There's a table of operations across data types, which can add operations
+	that pair to specific data types and represent a particular generic operation,
+	and also give the specific operation for a given set of data types and a
+	generic operation. There must also be an apply-generic function that handles
+	generic selectors.
+	+ new type T
+		T can handle its integration with 1 package installation function. For each
+		generic operation T wants to tango with, it defines a function (which can
+		have the same name as the generic) and puts it into the table with the
+		generic function's symbolic name, a list containing T (the list of types
+		on which this function should operate), and that specific function (passed
+		as a naked procedure, although if expected to return a value of type T,
+		wrapped in such a way to type-tag the value with T).
+	+ new operation Op
+		A new operation must seek out the installation packages for types that
+		should use the operation. Implementations specific to those types must
+		be defined in the packages and incorporated into the operations table.
+
+Message-passing Style
+	You're defined by your actions, and data types are one-man armies.
+	Literally. Don't ask them to work with other arguments. Send them on
+	one-parameter missions only.
+	+ new type T
+		The definition of a type is happy to dispatch operations itself,
+		checking to find its own appropriate function for the generic operation
+		passed to it. This means creating those specific definitions internally
+		and dispatching them internally.
+	+ new operation Op
+		Seek out the data types that should make use of this generic operation
+		and add internal specific functions to handle it. Also include Op's symbolic
+		name among the predicates in the dispatch function, and use the internal
+		implementations of the operation as the consequent expressions.
+
+The most appropriate approach for a system expecting lots of new...
+	types?
+		Data-directed. This style ensures the resultant coding required is mostly
+		additive. New types only require writing new installation packages.
+	operations?
+		Message-passing. This style simplifies the addition of type-specific
+		operations to those types, as well as the method for applying arguments
+		to a generic operation.
