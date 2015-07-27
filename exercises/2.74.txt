@@ -1,0 +1,42 @@
+a)
+For each type of data (i.e. each set implementation), a particular get-record
+must be implemented and tagged with that type of data. A divison's file can be
+expected to provide its set implementations so the general get-record procedure
+can find what specific get-record function it should use. Here is the general
+get-record's definition:
+
+(define (get-record employee personnel-file)
+	(let ((file-set-structure (get 'file-set-structure personnel-file)))
+		((get 'get-record file-set-structure) employee personnel-file)))
+
+b)
+A division's file should also provide its set implementation for the records
+themselves. This allows the general get-salary procedure to find the particular
+function to properly search for and return the salary value from that record
+structure.
+
+(define (get-salary employee personnel-file)
+	(let ((employee-record (get-record employee personnel-file))
+				(record-set-structure (get 'record-set-structure personnel-file)))
+		(if (not (null? employee-record))
+				((get 'get-salary record-set-structure) employee-record)
+				(error "no employee exists in personnel-file -- GET-SALARY employee personnel-file))))
+
+c)
+(define (find-employee-record employee personnel-files)
+	(if (null? personnel-files)
+			(error "no employee exists in personnel-files -- FIND-EMPLOYEE-RECORD employee personnel-files)
+			(let ((employee-record (get-record employee (car personnel-files))))
+				(if (null? employee-record)
+						(find-employee-record employee (cdr personnel-files))
+						employee-record))))
+						
+d)
+Assuming their personnel files follow the same variance pattern as divisions
+(otherwise moderate to horrific conversions should be made), they should add
+the rudimentary schema to the files so that when queried, the files return the
+types of sets used to organize all records and the sets used to organize all
+personnel information.
+If either of these set implementations are not found within the personnel
+procedures table as tags for the various operations, those operations must
+be implemented for the set(s) and put into the table.
