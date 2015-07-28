@@ -72,6 +72,8 @@
 ; === polar-complex numbers package ===
 (define (install-polar-package)
   ;; internal procedures
+  (define (magnitude z) (car z))
+  (define (angle z) (cdr z))
   (define (real-part z)
     (* (magnitude z) (cos (angle z))))
   (define (imag-part z)
