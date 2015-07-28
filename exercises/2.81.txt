@@ -1,0 +1,36 @@
+a)
+Calling exp with two complex numbers as arguments would create an infinite
+loop. After finding no proc for operation 'exp and types '(complex complex),
+apply-generic would search for the coercion complex->complex. Finding it,
+the procedure would happily call itself, using that coercion on the first
+complex number and leaving the second alone. Nothing changed. Now it faces
+the same problem with its arguments, and will come up with the same "solution."
+
+b)
+apply-generic works as is. When t1->t2 and t2->t1 both turn up false, the
+conditional's else consequent expression is an error that perfectly suits
+the situation.
+
+c)
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+          (if (= (length args) 2)
+              (let ((type1 (car type-tags))
+                    (type2 (cadr type-tags))
+                    (a1 (car args))
+                    (a2 (cadr args)))
+								(if (eq? type1 type2)
+										(error "No method for these types"
+											(list op type-tags))
+										(let ((t1->t2 (get-coercion type1 type2))
+													(t2->t1 (get-coercion type2 type1)))
+											(cond ((t1->t2) (apply-generic op (t1->t2 a1) a2))
+														((t2->t1) (apply-generic op a1 (t2->t1 a2)))
+														(else
+															(error "No method for these types"
+																		 (list op type-tags)))))))
+              (error "No method for these types"
+                     (list op type-tags)))))))
