@@ -1,0 +1,44 @@
+This works because there are 2 levels of type. From the top level, we can see
+the specific type of number is 'complex, but its datum is still yet generic,
+represtented by the type 'rectangular and containing the datum (3 . 4).
+
+The operations table did have generic functions linked to 'rectangular and
+'polar, offering a variety of type-specific functions for those data types
+(including magnitude, for instance.) But the table lacked a generic function
+hookup for 'complex data looking to use their own specific magnitude operation.
+
+By putting such functions into the operations table, those generic functions
+will leverage apply-generic to drill down into the second abstraction level,
+arriving at the 'rectangular or 'polar contents before seeking out the next
+function to handle that type. 
+
+Tracing (magnitude z), where z -> ('complex ('rectangular (3 . 4))):
+
+(magnitude z)
+(apply-generic 'magnitude (z))
+	(let ((type-tags (map type-tag (z)))) ; type-tags -> ('complex)
+		(let ((proc (get 'magnitude ('complex)))) ; proc -> magnitude
+			(apply magnitude (map contents (z)))
+(magnitude ('rectangular (3 . 4)))
+(apply-generic 'magnitude (('rectangular (3 . 4))))
+	(let ((type-tags (map type-tag (('rectangular (3 . 4))))) ; type-tags -> ('rectangular)
+		(let ((proc (get 'magnitude (('rectangular)))) ; proc -> magnitude (from install-rectangular-package)
+			(apply magnitude (map contents (('rectangular (3 . 4)))))
+(magnitude (3 . 4))
+(sqrt (+ (square (real-part (3 . 4)))
+				 (square (imag-part (3 . 4)))))
+(sqrt (+ (square (car (3 . 4)))
+				 (square (cdr (3 . 4)))))
+(sqrt (+ (square 3) (square 4)))
+(sqrt (+ 9 16))
+(sqrt 25)
+5
+
+apply-generic is executed twice. The first time, given the 'complex type, the
+procedure dispatched to is the global generic magnitude, defined as:
+(define (magnitude z) (apply-generic 'magnitude z))
+The second time, given the 'rectangular type, apply-generic dispatches
+to the local specific magnitude, defined within install-rectangular-package as:
+(define (magnitude z)
+  (sqrt (+ (square (real-part z))
+					 (square (imag-part z)))))
