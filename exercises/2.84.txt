@@ -1,7 +1,3 @@
-(define (raise arg)
-	(let ((tower (list integer rational real complex)))
-		(let ((type (type-tag arg)))
-
 (define (raise-integer integer)
 	((get-coercion 'integer 'rational) integer))
 	
