@@ -1,0 +1,94 @@
+(define (accumulate op initial sequence)
+	(if (null? sequence)
+			initial
+			(op (car sequence)
+					(accumulate op initial (cdr sequence)))))
+
+; retrieves coercion procedure to convert coercee to coercer's type
+; *if same type, returns identity function
+(define (fetch-coercion coercer coercee)
+	(if (eq? coercer coercee)
+			(lambda (x) x)
+			(get-coercion coercer coercee)))
+
+; retrieves all coercion procedures to convert coercees to coercer's type
+; *if a coercee has no coercion, terminates list with false
+(define (fetch-coercions-list coercer coercees)
+	(if (null? coercees)
+			'()
+			(let ((coercion (fetch-coercion coercer (car coercees))))
+				(if coercion
+						(cons coercion (fetch-coercions-list coercer (cdr coercees)))
+						false))))
+
+; checks that coercions does not terminate with false
+(define (valid-coercions-list? coercions)
+	(accumulate and true coercions))
+
+(define (find-total-coercerions types)
+	(define (find-iter coercers coercees total-coercerions valid-coercers)
+		(if (null? coercers)
+				(list total-coercers valid-coercers)
+				(let ((coercions (fetch-coercions-list (car coercers) coercees)))
+					(if (valid-coercions-list? coercions)
+							(find-iter (cdr coercers) coercees (cons coercions total-coercions) (cons (car coercers) valid-coercers))
+							(find-iter (cdr coercers) coercees total-coercions valid-coercers)))))
+	(find-iter types types '() '()))
+
+; applies the list of coercions to the list of coercees
+(define (apply-coercions coercions coercees)
+	(if (null? coercions)
+			'()
+			(cons ((car coercions) (car coercees))
+						(apply-coercions (cdr coercions) (cdr coercees)))))
+
+; applies all valid type coercion lists to the coercees
+; *seems unnecessary to do before validating against op-table
+(define (apply-total-coercions total-coercions coercees)
+	(if (null? total-coercions)
+			'()
+			(cons (apply-coercions (car total-coercions) coercees)
+						(apply-total-coercions (cdr total-coercions coercees)))))
+
+; generates list where type is repeated n times
+(define (generate-args-types type n)
+	(if (= n 0)
+			'()
+			(cons type (generate-table-query) type (- n 1))))
+
+; attempts to find in the op-table a procedure op matched to the parameters of type-list
+(define (fetch-op op type-list)
+	(apply get (cons op type-list)))
+
+; takes list of all coercion transformations available and all types those coercions result in
+;   and searches through op-table to find a procedure matching the op and those coerced parameters
+(define (find-valid-procedure op total-coercions total-coercees)
+	(if (null? total-coercees)
+			false
+			(let ((coercions (car total-coercions))
+						(coercee (car total-coercees)))
+				(let ((args-types (generate-args-types coercee (length coercions))))
+					(let ((fetched-op (fetch-op op args-types)))
+						(if fetched-op
+								(list fetched-op coercions)
+								(find-valid-procedure op (cdr total-coercions) (cdr total-coercees))))))))
+
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+					(let ((total-coercion-pairs (find-total-coercions type-tags)))
+						(let ((total-coercions (car total-coercion-pairs))
+									(total-coercers (cadr total-coercion-pairs)))
+							(let ((valid-proc-info (find-valid-procedure op total-coercions total-coercees)))
+								(if valid-proc-info
+										(let ((valid-proc (car valid-proc-info))
+													(coercions (cadr valid-proc-info)))
+											(let ((coerced-args (apply-coercions coercions args)))
+												(apply apply-generic (cons valid-proc coerced-args))))
+										(error "No method for these types, coerced or otherwise" (list op type-tags))))))))))
+
+
+
+Any procedure which filters arguments based on type would not be generalizable under apply-generic.
