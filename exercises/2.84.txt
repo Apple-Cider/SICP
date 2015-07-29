@@ -1,0 +1,54 @@
+(define (raise arg)
+	(let ((tower (list integer rational real complex)))
+		(let ((type (type-tag arg)))
+
+(define (raise-integer integer)
+	((get-coercion 'integer 'rational) integer))
+	
+(define (raise-rational rational)
+	((get-coercion 'rational 'real) rational))
+
+(define (raise-real real)
+	((get-coercion 'real 'complex) real))
+
+(put 'raise 'integer raise-integer)
+(put 'raise 'rational raise-rational)
+(put 'raise 'real raise-real)
+
+(define (raise number) (apply-generic 'raise number))
+
+
+(define (distance-from-top number)
+	(define (tower-climber height-climbed arg)
+		(let ((raise-op (get 'raise (type-tag arg))))
+			(if raise-op
+					(tower-climber (+ height-climbed 1) (raise-op arg))
+					height-climbed)))
+	(tower-climber 0 number))
+
+; true when n1 is closer to top
+(define (higher? n1 n2)
+	(< (distance-from-top n1) (distance-from-top n2)))
+
+(define (raise-to-same-height number target)
+	(if (eq? (type-tag number) (type-tag target))
+			number
+			(raise-to-same-height (raise number) target)))
+
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+          (if (= (length args) 2)
+							(let ((a1 (car args))
+										(a2 (cadr args)))
+								(cond ((higher? a1 a2)
+											 (apply-generic op a1 (raise-to-same-height a2 a1)))
+											((higher? a2 a1)
+											 (apply-generic op (raise-to-same-height a1 a2) a2))
+											(else
+											 (error "No method for these types"
+															(list op type-tags)))))
+              (error "No method for these types"
+                     (list op type-tags)))))))
