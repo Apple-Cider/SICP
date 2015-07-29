@@ -40,8 +40,7 @@
 
 ; === ordinary numbers package ===
 (define (install-number-package)
-  (put 'equ? '(number number)
-       (lambda (x y) (= x y))
+  (put 'equ? '(number number) =)
   'done))
 
 
