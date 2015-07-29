@@ -1,0 +1,18 @@
+(define (raise arg)
+	(let ((tower (list integer rational real complex)))
+		(let ((type (type-tag arg)))
+
+(define (raise-integer integer)
+	((get-coercion 'integer 'rational) integer))
+	
+(define (raise-rational rational)
+	((get-coercion 'rational 'real) rational))
+
+(define (raise-real real)
+	((get-coercion 'real 'complex) real))
+
+(put 'raise 'integer raise-integer)
+(put 'raise 'rational raise-rational)
+(put 'raise 'real raise-real)
+
+(define (raise number) (apply-generic 'raise number))
